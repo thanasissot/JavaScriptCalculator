@@ -10,9 +10,9 @@
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
   <link rel="stylesheet" href="/index.css">
-  <script type="text/javascript" src="/twitch.js"></script>
   <script type="text/javascript" src="/app.js"></script>
   <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/4.2.2/math.min.js"></script>
 </head>
 <body ng-app='mainApp' ng-controller='mainController'>
 
@@ -22,39 +22,39 @@
         <div class="" id="Calc">
           <header class="text-center" id="header">JavaScript Calculator</header>
           <div class="text-right" id="screen">
-            123
-            <span class="text-right d-block" id='subscreen'>123</span>
+            {{ topTextFunc() || botTextFunc() || '0' }}
+            <span class="text-right d-block" id='subscreen' ng-model='resultArray' ng-change='botTextFunc()'>{{ botTextFunc() || '0'}}</span>
           </div>
           <span class="" id="span">by namikazee</span>
           <div class="d-flex flex-column row-hl" id="mainBody">
             <div class="item-hl d-flex flex-row row-hl">
-              <div class="item-hl"><a class="button black">C</a></div>
-              <div class="item-hl"><a class="button black">^</a></div>
-              <div class="item-hl"><a class="button black">%</a></div>
-              <div class="item-hl"><a class="button black">/</a></div>
+              <div class="item-hl"><a class="button black" ng-click='refresh()'>C</a></div>
+              <div class="item-hl"><a class="button black" ng-click='remove()'><i class="fa fa-arrow-left"></i></a></div>
+              <div class="item-hl"><a class="button black" ng-click='operator("^")'>^</a></div>
+              <div class="item-hl"><a class="button black" ng-click='operator("/")'>&divide;</a></div>
             </div>
             <div class="item-hl d-flex flex-row row-hl">
-              <div class="item-hl"><a class="button black">7</a></div>
-              <div class="item-hl"><a class="button black">8</a></div>
-              <div class="item-hl"><a class="button black">9</a></div>
-              <div class="item-hl"><a class="button black">x</a></div>
+              <div class="item-hl"><a class="button black num" ng-click='resultArray.push("7")'>7</a></div>
+              <div class="item-hl"><a class="button black num" ng-click='resultArray.push("8")'>8</a></div>
+              <div class="item-hl"><a class="button black num" ng-click='resultArray.push("9")'>9</a></div>
+              <div class="item-hl"><a class="button black" ng-click='operator("*")'>x</a></div>
             </div>
             <div class="item-hl d-flex flex-row row-hl">
-              <div class="item-hl"><a class="button black">4</a></div>
-              <div class="item-hl"><a class="button black">5</a></div>
-              <div class="item-hl"><a class="button black">6</a></div>
-              <div class="item-hl"><a class="button black">-</a></div>
+              <div class="item-hl"><a class="button black num" ng-click='resultArray.push("4")'>4</a></div>
+              <div class="item-hl"><a class="button black num" ng-click='resultArray.push("5")'>5</a></div>
+              <div class="item-hl"><a class="button black num" ng-click='resultArray.push("6")'>6</a></div>
+              <div class="item-hl"><a class="button black" ng-click='operator("-")'>-</a></div>
             </div>
             <div class="item-hl d-flex flex-row row-hl">
-              <div class="item-hl"><a class="button black">1</a></div>
-              <div class="item-hl"><a class="button black">2</a></div>
-              <div class="item-hl"><a class="button black">3</a></div>
-              <div class="item-hl"><a class="button black">+</a></div>
+              <div class="item-hl"><a class="button black num" ng-click='resultArray.push("1")'>1</a></div>
+              <div class="item-hl"><a class="button black num" ng-click='resultArray.push("2")'>2</a></div>
+              <div class="item-hl"><a class="button black num" ng-click='resultArray.push("3")'>3</a></div>
+              <div class="item-hl"><a class="button black" ng-click='operator("+")'>+</a></div>
             </div>
             <div class="item-hl d-flex flex-row row-hl">
-              <div class="item-hl"><a class="button black" style="width: 114px;">0</a></div>
-              <div class="item-hl"><a class="button black">.</a></div>
-              <div class="item-hl"><a class="button black">=</a></div>
+              <div class="item-hl"><a class="button black num" style="width: 114px;" ng-click='resultArray.push("0")'>0</a></div>
+              <div class="item-hl"><a class="button black num" ng-click='resultArray.push(".")'>.</a></div>
+              <div class="item-hl"><a class="button black" ng-click='result()'>=</a></div>
             </div>
           </div>
          <!--* -->
